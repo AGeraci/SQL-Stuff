@@ -1,0 +1,18 @@
+select
+	CAST(Date_0 AS DATE) as Date,
+	locations.name as Location,
+	RAILYARD_LIFTSCAR_UNLOADS as Lifts,
+	EXTRA_LIFTSFLIPS__BILLABLECAR as xLifts
+	Sum(NVL({RAILYARD_LIFTSCAR_UNLOADS},0) + NVL({EXTRA_LIFTSFLIPS__BILLABLECAR},0)) as Total_Lifts
+
+from lift_data
+Left JOIN locations ON lift_data.location_id = locations.location_id
+
+WHERE
+	Date_0 BETWEEN SYSDATE-32 AND Sysdate-1
+	
+	-- Functions but not being used
+	
+
+	-- Causes Errors
+	Date_0 BETWEEN Trunc(SYSDATE,'YYYY/MM/DD')-32 AND Trunc(Sysdate,'YYYY/MM/DD')-1
